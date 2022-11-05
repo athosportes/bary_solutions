@@ -38,6 +38,10 @@ dependencies:
   google_fonts: ^3.0.1
   string_validator: ^0.3.0
 
+  # mobX
+  mobx: ^2.1.1
+  flutter_mobx: ^2.0.6+4
+
 flutter_native_splash:
   color: '#FFFFFF'
   image: './assets/splash.png'
@@ -56,11 +60,10 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
 
-  # The "flutter_lints" package below contains a set of recommended lints to
-  # encourage good coding practices. The lint set provided by the package is
-  # activated in the `analysis_options.yaml` file located at the root of your
-  # package. See that file for information about deactivating specific lint
-  # rules and activating additional ones.
+  # mobx
+  mobx_codegen: ^2.0.7+3
+  build_runner: ^2.3.2
+
   flutter_lints: ^2.0.0
 
 # For information on the generic Dart part of this file, see the
@@ -97,6 +100,12 @@ flutter:
           weight: 400
         - asset: assets/fonts/Nunito-SemiBold.ttf
           weight: 600
+        - asset: assets/fonts/Nunito-Bold.ttf
+          weight: 700
+        - asset: assets/fonts/Nunito-ExtraBold.ttf
+          weight: 800
+        - asset: assets/fonts/Nunito-Black.ttf
+          weight: 900
           
   #   - family: Trajan Pro
   #     fonts:
