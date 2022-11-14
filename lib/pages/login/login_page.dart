@@ -1,4 +1,4 @@
-import '../../../src/components/custom_text_field_widget.dart';
+import 'package:bary_solutions/components/custom_text_field_widget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -65,7 +65,6 @@ class _LoginPageState extends State<LoginPage> {
               child: Text(
             'Esqueceu sua senha?',
             style: TextStyle(
-                fontFamily: 'Nunito',
                 fontWeight: FontWeight.w600,
                 fontSize: 16,
                 decoration: TextDecoration.underline),
@@ -80,7 +79,7 @@ class _LoginPageState extends State<LoginPage> {
       padding: const EdgeInsets.only(top: 64),
       child: CustomElevatedButton(
         labelButton: 'Entrar',
-        onPressed: () {},
+        onPressed: (){},
       ),
     );
   }
@@ -129,3 +128,6 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 }
+
+
+

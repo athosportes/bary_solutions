@@ -1,7 +1,8 @@
-import '../../src/constants/custom_colors.dart';
+import 'package:bary_solutions/constants/custom_colors.dart';
 import 'package:flutter/material.dart';
 
 class CustomElevatedButton extends StatelessWidget {
+  
   final String labelButton;
   final void Function() onPressed;
 
