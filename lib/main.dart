@@ -1,23 +1,28 @@
+import 'package:bary_solutions/config/global.theme.dart';
+import 'package:bary_solutions/widgets/check_auth_widget.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
+import 'package:bary_solutions/config/config.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:get/get.dart';
 
-import 'pages/epidemiologial_vigilance_register/epidemiological_vigilance_register_page.dart';
-// import 'pages/home/home_page.dart';
-// import 'pages/login/login_page.dart';
+import 'routes/app_pages.dart';
 
-void main() {
-  WidgetsFlutterBinding.ensureInitialized();
-  SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
+void main() async {
+  await initConfiguration();
+
   runApp(
-    MaterialApp(
-      home: EpidemiologialVigilanceRegisterPage(),
+    GetMaterialApp(
+      localizationsDelegates: [
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+      ],
+      supportedLocales: [const Locale('pt', 'BR')],
       debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-          primaryColor: Color(0xFFEF7F1A),
-          fontFamily: 'Nunito',
-          appBarTheme: AppBarTheme(
-              backgroundColor: Colors.white,
-              foregroundColor: Color(0xFFEF7F1A))),
+      theme: customTheme,
+      home: CheckAuthWidget(),
+      navigatorKey: Get.key,
+      getPages: AppPages.routes,
     ),
   );
 }

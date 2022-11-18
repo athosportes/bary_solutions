@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 @immutable
 class UserModel {
   final String email;
+
   final String password;
 
   UserModel({

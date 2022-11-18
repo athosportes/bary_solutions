@@ -1,7 +1,10 @@
+import 'package:bary_solutions/widgets/custom_elevated_button_widget.dart';
 import 'package:bary_solutions/pages/epidemiologial_vigilance_register/filter_selector_widget.dart';
 import 'package:bary_solutions/pages/epidemiologial_vigilance_register/vigilance_option_widget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/date_symbol_data_local.dart';
+import 'package:intl/intl.dart';
 
 class EpidemiologialVigilanceRegisterPage extends StatefulWidget {
   const EpidemiologialVigilanceRegisterPage({super.key});
@@ -13,6 +16,7 @@ class EpidemiologialVigilanceRegisterPage extends StatefulWidget {
 
 class _EpidemiologialVigilanceRegisterPageState
     extends State<EpidemiologialVigilanceRegisterPage> {
+  DateTime _dateTime = DateTime.now();
 
   final _patientController = TextEditingController();
   ValueNotifier _patientNotifier = ValueNotifier<String>('0');
@@ -32,34 +36,36 @@ class _EpidemiologialVigilanceRegisterPageState
   TextEditingController _nppController = TextEditingController();
   ValueNotifier _nppNotifier = ValueNotifier<String>('0');
 
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: Text('Ficha de vigilância epidemiológica'),
-        ),
-        body: GestureDetector(
-          onTap: () => FocusScope.of(context).unfocus(),
-          child: SingleChildScrollView(
-            child: Container(
-              padding: EdgeInsets.all(16),
-              child: Column(
-                children: [
-                  _dateAndUnitSelector(context),
-                  SizedBox(height: 28),
-                  _menuOptions(),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisSize: MainAxisSize.max,
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [Text('')],
-                  )
-                ],
-              ),
+      appBar: AppBar(
+        title: Text('Ficha de vigilância epidemiológica'),
+      ),
+      body: GestureDetector(
+        onTap: () => FocusScope.of(context).unfocus(),
+        child: SingleChildScrollView(
+          child: Container(
+            padding: EdgeInsets.all(16),
+            child: Column(
+              children: [
+                _dateAndUnitSelector(context),
+                SizedBox(height: 28),
+                _menuOptions(),
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [],
+                )
+              ],
             ),
           ),
-        ));
+        ),
+      ),
+      bottomSheet: Padding(
+        padding: const EdgeInsets.all(16),
+        child: CustomElevatedButton(labelButton: 'Salvar', onPressed: () {}),
+      ),
+    );
   }
 
   Column _menuOptions() {
@@ -100,18 +106,38 @@ class _EpidemiologialVigilanceRegisterPageState
   }
 
   Row _dateAndUnitSelector(BuildContext context) {
+    initializeDateFormatting();
+
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         FilterSelectorWidget(
-          onTap: () {
-            print(MediaQuery.of(context).size.aspectRatio);
+          onTap: () async {
+            DateTime? newDate = await showDatePicker(
+                context: context,
+                initialDate: _dateTime,
+                firstDate: DateTime(2000),
+                lastDate: DateTime.now());
+
+            if (newDate == null) return;
+
+            setState(() => _dateTime = newDate);
           },
           icon: Icons.calendar_month,
-          value: '3 de novembro',
+          value: DateFormat("d 'de' MMMM").format(_dateTime),
         ),
         FilterSelectorWidget(
-          onTap: () {},
+          onTap: () {
+            showModalBottomSheet(
+                context: context,
+                // isScrollControlled: true,
+                shape: RoundedRectangleBorder(
+                    borderRadius:
+                        BorderRadius.vertical(top: Radius.circular(20))),
+                builder: (context) => Center(
+                      child: Text('Texto'),
+                    ));
+          },
           icon: CupertinoIcons.building_2_fill,
           value: 'Unidade de terapia intensiva',
         )

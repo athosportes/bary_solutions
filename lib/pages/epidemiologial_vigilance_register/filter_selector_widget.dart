@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class FilterSelectorWidget extends StatelessWidget {
+class FilterSelectorWidget extends StatefulWidget {
   final IconData icon;
   final String value;
   final void Function() onTap;
@@ -13,9 +13,14 @@ class FilterSelectorWidget extends StatelessWidget {
   });
 
   @override
+  State<FilterSelectorWidget> createState() => _FilterSelectorWidgetState();
+}
+
+class _FilterSelectorWidgetState extends State<FilterSelectorWidget> {
+  @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: onTap,
+      onTap: widget.onTap,
       child: Ink(
         child: Container(
           padding: EdgeInsets.all(8),
@@ -31,24 +36,26 @@ class FilterSelectorWidget extends StatelessWidget {
                 child: Row(
                   children: [
                     Icon(
-                      icon,
+                      widget.icon,
                       size: MediaQuery.of(context).size.aspectRatio * 50,
                     ),
                   ],
                 ),
               ),
               Positioned(
-                  child: Padding(
-                      padding: EdgeInsets.only(left: 30),
-                      child: Center(
-                        child: Text(
-                          value,
-                          style: TextStyle(
-                            fontSize: 16,
-                            overflow: TextOverflow.ellipsis,
-                          ),
-                        ),
-                      ))),
+                child: Padding(
+                  padding: EdgeInsets.only(left: 30),
+                  child: Center(
+                    child: Text(
+                      widget.value,
+                      style: TextStyle(
+                        fontSize: 16,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                    ),
+                  ),
+                ),
+              ),
             ],
           ),
         ),

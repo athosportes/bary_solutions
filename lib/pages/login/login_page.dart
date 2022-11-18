@@ -1,25 +1,18 @@
-import 'package:bary_solutions/components/custom_text_field_widget.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import '../../components/custom_elevated_button_widget.dart';
+import 'package:bary_solutions/pages/login/login_controller.dart';
+import 'package:bary_solutions/services/auth_service.dart';
+import 'package:bary_solutions/widgets/custom_text_field_widget.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:get/get.dart';
 
-class LoginPage extends StatefulWidget {
-  const LoginPage({super.key});
+import '../../widgets/custom_elevated_button_widget.dart';
 
-  @override
-  State<LoginPage> createState() => _LoginPageState();
-}
+class LoginPage extends GetView<LoginController> {
+  final LoginController controller = Get.find<LoginController>();
+  final AuthService authService = Get.find<AuthService>();
 
-class _LoginPageState extends State<LoginPage> {
-  final _formKey = GlobalKey<FormState>();
-  bool _passwordVisible = false;
-
-  ValueNotifier<bool> emailNotifier = ValueNotifier(false);
-  ValueNotifier<bool> passwordNotifier = ValueNotifier(false);
-  ValueNotifier<bool> showPassword = ValueNotifier(false);
-
-  final TextEditingController _emailController = TextEditingController();
+  final formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -37,7 +30,7 @@ class _LoginPageState extends State<LoginPage> {
                 _mainImage(),
                 _spacer(),
                 Form(
-                  key: _formKey,
+                  key: formKey,
                   child: Column(
                     children: [
                       _emailTextField(),
@@ -74,16 +67,6 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
-  Padding _button() {
-    return Padding(
-      padding: const EdgeInsets.only(top: 64),
-      child: CustomElevatedButton(
-        labelButton: 'Entrar',
-        onPressed: (){},
-      ),
-    );
-  }
-
   EdgeInsets _initialPadding() =>
       EdgeInsets.only(bottom: 32, left: 32, right: 32, top: 120);
 
@@ -92,42 +75,58 @@ class _LoginPageState extends State<LoginPage> {
 
   SizedBox _spacer() => SizedBox(height: 80);
 
-  Padding _emailTextField() {
-    return Padding(
-      padding: EdgeInsets.only(top: 30),
-      child: CustomFormField(
-        valueNotifier: emailNotifier,
-        onFocusChange: (focus) => {emailNotifier.value = focus},
-        icon: CupertinoIcons.mail,
-        title: 'Endereço de email',
-        label: 'Digite seu email',
+  Widget _emailTextField() {
+    return Obx(
+      () => Padding(
+        padding: EdgeInsets.only(top: 30),
+        child: CustomFormField(
+          controller: controller.emailController.value,
+          observable: controller.emailObx.value,
+          onFocusChange: (focus) => {controller.emailObx.value = focus},
+          icon: CupertinoIcons.mail,
+          title: 'Endereço de email',
+          label: 'Digite seu email',
+        ),
       ),
     );
   }
 
-  Padding _passwordTextField() {
+  Widget _passwordTextField() {
+    return Obx(
+      () => Padding(
+        padding: EdgeInsets.only(top: 30),
+        child: CustomFormField(
+          suffixIconOnPressed: () => controller.suffixIconOnPressed(),
+          controller: controller.passwordController.value,
+          observable: controller.passwordObx.value,
+          isPassword: true,
+          obscureText: !controller.passwordVisible.value,
+          onFocusChange: (value) {
+            controller.setPasswordObx(value);
+            print(value);
+            print(controller.passwordObx);
+          },
+          icon: CupertinoIcons.lock,
+          title: 'Sua senha',
+          label: '**********',
+        ),
+      ),
+    );
+  }
+
+  Padding _button() {
     return Padding(
-      padding: EdgeInsets.only(top: 30),
-      child: CustomFormField(
-        suffixIconOnPressed: () {
-          // Update the state i.e. toogle the state of passwordVisible variable
-          setState(() {
-            _passwordVisible = !_passwordVisible;
-          });
+      padding: const EdgeInsets.only(top: 64),
+      child: CustomElevatedButton(
+        isLoading: false,
+        labelButton: 'Entrar',
+        onPressed: () {
+          String _email = controller.emailController.value.text;
+          String _password = controller.passwordController.value.text;
+          // widget._loginController.handleLogin(_email, _password);
+          authService.login(_email, _password);
         },
-        onChanged: (value) => _emailController.value,
-        controller: _emailController,
-        isPassword: true,
-        obscureText: !_passwordVisible,
-        valueNotifier: passwordNotifier,
-        onFocusChange: (focus) => {passwordNotifier.value = focus},
-        icon: CupertinoIcons.lock,
-        title: 'Sua senha',
-        label: '**********',
       ),
     );
   }
 }
-
-
-

@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "1035990208726",
+    "project_id": "bary-solutions",
+    "storage_bucket": "bary-solutions.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1035990208726:android:172c40182352c54464b977",
+        "android_client_info": {
+          "package_name": "com.example.bary_solutions"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1035990208726-lvilp3p2p2lgi7tlelsotscj8q8sli08.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDqDcZ8U4RC2OwjS-jkcjyK9VHOoRaxRMM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1035990208726-lvilp3p2p2lgi7tlelsotscj8q8sli08.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "1035990208726-3tvuauqidkjgub66ffehs70mbd4th7en.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.barySolutions"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

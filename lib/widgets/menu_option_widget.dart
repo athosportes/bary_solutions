@@ -3,17 +3,19 @@ import 'package:flutter/material.dart';
 class MenuOptionWidget extends StatelessWidget {
   final String label;
   final IconData icon;
+  final void Function() onTap;
 
   const MenuOptionWidget({
     super.key,
     required this.label,
     required this.icon,
+    required this.onTap,
   });
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () => {},
+      onTap: onTap,
       child: Ink(
         child: Stack(
           children: [

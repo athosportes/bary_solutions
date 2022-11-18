@@ -1,16 +1,21 @@
+import 'package:bary_solutions/routes/app_pages.dart';
+import 'package:bary_solutions/services/auth_service.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
-import '../../components/menu_option_widget.dart';
+import '../../widgets/menu_option_widget.dart';
 
-class Home extends StatefulWidget {
-  const Home({super.key});
+class HomePage extends StatefulWidget {
+  final _authService = Get.find<AuthService>();
+
+  // const HomePage({super.key});
 
   @override
-  State<Home> createState() => _HomeState();
+  State<HomePage> createState() => _HomePageState();
 }
 
-class _HomeState extends State<Home> {
+class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -42,39 +47,49 @@ class _HomeState extends State<Home> {
 
   Column _menuOptions() {
     return Column(
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.all(16),
-                    child: MenuOptionWidget(
-                        label: 'Ficha de vigilância epidemiológica',
-                        icon: Icons.note_add_sharp),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(16),
-                    child: MenuOptionWidget(
-                        label: 'Relatórios',
-                        icon: Icons.pie_chart),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(16),
-                    child: MenuOptionWidget(
-                        label: 'Cadastros',
-                        icon: Icons.add_home_work_sharp),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(16),
-                    child: MenuOptionWidget(
-                        label: 'Configurações',
-                        icon: Icons.settings),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(16),
-                    child: MenuOptionWidget(
-                        label: 'Sair',
-                        icon: Icons.exit_to_app),
-                  ),
-                ],
-              );
+      children: [
+        Padding(
+          padding: const EdgeInsets.all(16),
+          child: MenuOptionWidget(
+              onTap: () =>
+                  Get.toNamed(Routes.EPIDEMIOLOGICAL_VIGILANCE_REGISTER),
+              label: 'Ficha de vigilância epidemiológica',
+              icon: Icons.note_add_sharp),
+        ),
+        Padding(
+          padding: const EdgeInsets.all(16),
+          child: MenuOptionWidget(
+            onTap: () {},
+            label: 'Relatórios',
+            icon: Icons.pie_chart,
+          ),
+        ),
+        Padding(
+          padding: const EdgeInsets.all(16),
+          child: MenuOptionWidget(
+            onTap: () {},
+            label: 'Cadastros',
+            icon: Icons.add_home_work_sharp,
+          ),
+        ),
+        Padding(
+          padding: const EdgeInsets.all(16),
+          child: MenuOptionWidget(
+            onTap: () {},
+            label: 'Configurações',
+            icon: Icons.settings,
+          ),
+        ),
+        Padding(
+          padding: const EdgeInsets.all(16),
+          child: MenuOptionWidget(
+            onTap: () => widget._authService.logout(),
+            label: 'Sair',
+            icon: Icons.exit_to_app,
+          ),
+        ),
+      ],
+    );
   }
 
   Row _userInformations() {
