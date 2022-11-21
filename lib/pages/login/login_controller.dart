@@ -1,5 +1,6 @@
-import 'package:bary_solutions/services/auth_service.dart';
 import 'package:flutter/material.dart';
+
+import 'package:bary_solutions/services/auth_service.dart';
 import 'package:get/get.dart';
 
 class LoginController extends GetxController {

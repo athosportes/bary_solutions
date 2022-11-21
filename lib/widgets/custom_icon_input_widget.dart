@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 
-class CustomIconInput extends StatelessWidget {
+class CustomIconInputWidget extends StatelessWidget {
   final IconData icon;
   final Color color;
   
 
-  const CustomIconInput({super.key, required this.icon, required this.color});
+  const CustomIconInputWidget({super.key, required this.icon, required this.color});
 
   @override
   Widget build(BuildContext context) {

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../constants/constants.dart' as textStyle;
 
-class CustomFormField extends StatelessWidget {
+class CustomFormFieldWidget extends StatelessWidget {
   final String label;
   final String title;
   final IconData? icon;
@@ -16,7 +16,7 @@ class CustomFormField extends StatelessWidget {
   final bool? passwordVisible;
   final bool? isPassword;
 
-  const CustomFormField({
+  const CustomFormFieldWidget({
     Key? key,
     required this.label,
     required this.title,

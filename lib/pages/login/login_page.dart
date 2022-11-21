@@ -79,7 +79,7 @@ class LoginPage extends GetView<LoginController> {
     return Obx(
       () => Padding(
         padding: EdgeInsets.only(top: 30),
-        child: CustomFormField(
+        child: CustomFormFieldWidget(
           controller: controller.emailController.value,
           observable: controller.emailObx.value,
           onFocusChange: (focus) => {controller.emailObx.value = focus},
@@ -95,7 +95,7 @@ class LoginPage extends GetView<LoginController> {
     return Obx(
       () => Padding(
         padding: EdgeInsets.only(top: 30),
-        child: CustomFormField(
+        child: CustomFormFieldWidget(
           suffixIconOnPressed: () => controller.suffixIconOnPressed(),
           controller: controller.passwordController.value,
           observable: controller.passwordObx.value,
@@ -103,8 +103,6 @@ class LoginPage extends GetView<LoginController> {
           obscureText: !controller.passwordVisible.value,
           onFocusChange: (value) {
             controller.setPasswordObx(value);
-            print(value);
-            print(controller.passwordObx);
           },
           icon: CupertinoIcons.lock,
           title: 'Sua senha',
@@ -117,7 +115,7 @@ class LoginPage extends GetView<LoginController> {
   Padding _button() {
     return Padding(
       padding: const EdgeInsets.only(top: 64),
-      child: CustomElevatedButton(
+      child: CustomElevatedButtonWidget(
         isLoading: false,
         labelButton: 'Entrar',
         onPressed: () {

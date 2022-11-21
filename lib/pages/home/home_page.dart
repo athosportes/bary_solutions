@@ -1,7 +1,8 @@
+import 'package:flutter/material.dart';
+
 import 'package:bary_solutions/routes/app_pages.dart';
 import 'package:bary_solutions/services/auth_service.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../widgets/menu_option_widget.dart';
@@ -52,7 +53,7 @@ class _HomePageState extends State<HomePage> {
           padding: const EdgeInsets.all(16),
           child: MenuOptionWidget(
               onTap: () =>
-                  Get.toNamed(Routes.EPIDEMIOLOGICAL_VIGILANCE_REGISTER),
+                  Get.toNamed(Routes.EPIDEMIOLOGICAL_VIGILANCE),
               label: 'Ficha de vigilância epidemiológica',
               icon: Icons.note_add_sharp),
         ),

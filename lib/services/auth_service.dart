@@ -49,7 +49,6 @@ class AuthService extends GetxController {
       await _auth.signInWithEmailAndPassword(email: email, password: password);
     } on FirebaseAuthException catch (e) {
       Get.back();
-      print(e.code);
       String error = 'Erro';
       switch (e.code) {
         case 'wrong-password':

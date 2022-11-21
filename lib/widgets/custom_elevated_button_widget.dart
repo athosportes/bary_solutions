@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 
 import '../constants/constants.dart' as colors;
 
-class CustomElevatedButton extends StatelessWidget {
+class CustomElevatedButtonWidget extends StatelessWidget {
   final String labelButton;
   final void Function() onPressed;
   final bool? isLoading;
 
-  const CustomElevatedButton({
+  const CustomElevatedButtonWidget({
     super.key,
     required this.labelButton,
     required this.onPressed,
