@@ -52,8 +52,7 @@ class _HomePageState extends State<HomePage> {
         Padding(
           padding: const EdgeInsets.all(16),
           child: MenuOptionWidget(
-              onTap: () =>
-                  Get.toNamed(Routes.EPIDEMIOLOGICAL_VIGILANCE),
+              onTap: () => Get.toNamed(Routes.EPIDEMIOLOGICAL_VIGILANCE),
               label: 'Ficha de vigilância epidemiológica',
               icon: Icons.note_add_sharp),
         ),
@@ -93,12 +92,18 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  Row _userInformations() {
+  Widget _userInformations() {
     return Row(
       children: [
-        Icon(
-          CupertinoIcons.person_alt_circle,
-          size: 70,
+        InkWell(
+          borderRadius: BorderRadius.circular(60),
+          onTap: () => Get.toNamed(Routes.PROFILE_OPTIONS),
+          child: Ink(
+            child: Icon(
+              CupertinoIcons.person_alt_circle,
+              size: 70,
+            ),
+          ),
         ),
         SizedBox(
           width: 12,

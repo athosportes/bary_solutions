@@ -1,5 +1,6 @@
 import 'package:bary_solutions/pages/epidemiological_vigilance/epidemiological_vigilance_view/epidemiological_vigilance_page_controller.dart';
 import 'package:bary_solutions/pages/epidemiological_vigilance/widget/filter_selector_widget.dart';
+import 'package:bary_solutions/routes/app_pages.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -41,8 +42,8 @@ class EpidemiologicalVigilancePage extends StatelessWidget {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        // onPressed: () => Get.toNamed(Routes.EPIDEMIOLOGICAL_VIGILANCE_REGISTER),
-        onPressed: () => controller.loadEpidemiologicalVigilanceList(),
+        onPressed: () => Get.toNamed(Routes.EPIDEMIOLOGICAL_VIGILANCE_REGISTER),
+        // onPressed: () => controller.loadEpidemiologicalVigilanceList(),
         backgroundColor: color.primaryColor,
         child: const Icon(Icons.add),
       ),

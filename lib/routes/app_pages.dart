@@ -5,6 +5,7 @@ import 'package:bary_solutions/pages/epidemiological_vigilance/epidemiological_v
 import 'package:bary_solutions/pages/home/home_page.dart';
 import 'package:bary_solutions/pages/login/login_controller.dart';
 import 'package:bary_solutions/pages/login/login_page.dart';
+import 'package:bary_solutions/pages/profile_options/profile_options_page.dart';
 import 'package:bary_solutions/services/auth_service.dart';
 import 'package:get/get.dart';
 part './app_routes.dart';
@@ -26,14 +27,23 @@ class AppPages {
       name: Routes.EPIDEMIOLOGICAL_VIGILANCE_REGISTER,
       page: () => EpidemiologialVigilanceRegisterPage(),
       binding: BindingsBuilder(() {
-        Get.lazyPut<EpidemiologicalVigilanceRegisterController>(() => EpidemiologicalVigilanceRegisterController(), fenix: true);
+        Get.lazyPut<EpidemiologicalVigilanceRegisterController>(
+            () => EpidemiologicalVigilanceRegisterController(),
+            fenix: true);
       }),
     ),
     GetPage(
-        name: Routes.EPIDEMIOLOGICAL_VIGILANCE,
-        page: () => EpidemiologicalVigilancePage(),
-        binding: BindingsBuilder(() {
-          Get.lazyPut<EpidemiologicalVigilancePageController>(() => EpidemiologicalVigilancePageController(), fenix: true);
-        })),
+      name: Routes.EPIDEMIOLOGICAL_VIGILANCE,
+      page: () => EpidemiologicalVigilancePage(),
+      binding: BindingsBuilder(() {
+        Get.lazyPut<EpidemiologicalVigilancePageController>(
+            () => EpidemiologicalVigilancePageController(),
+            fenix: true);
+      }),
+    ), 
+    GetPage(
+      name: Routes.PROFILE_OPTIONS,
+      page: () => ProfileOptionsPage(),
+    ),
   ];
 }

@@ -46,7 +46,13 @@ class AuthService extends GetxController {
         Center(child: CircularProgressIndicator(color: colors.primaryColor)),
         barrierDismissible: false,
       );
-      await _auth.signInWithEmailAndPassword(email: email, password: password);
+      //await
+      final loginRetorno = await _auth.signInWithEmailAndPassword(email: email, password: password);
+      final currentUSer = await _auth.currentUser;
+
+      print('loginRetorno $loginRetorno');
+      print('currentUSer $currentUSer');
+
     } on FirebaseAuthException catch (e) {
       Get.back();
       String error = 'Erro';

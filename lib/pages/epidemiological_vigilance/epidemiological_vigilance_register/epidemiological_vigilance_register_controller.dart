@@ -1,8 +1,5 @@
 // ignore_for_file: invalid_return_type_for_catch_error
 
-import 'package:bary_solutions/models/unit_model.dart';
-import 'package:bary_solutions/routes/app_pages.dart';
-import 'package:bary_solutions/widgets/full_screen_loading_widget.dart';
 import 'package:flutter/material.dart';
 
 import 'package:bary_solutions/models/epidemiological_vigilance_model.dart';
@@ -40,6 +37,9 @@ class EpidemiologicalVigilanceRegisterController extends GetxController {
   }
 
   Future<void> handleAddEpidemiologicalVigilance() async {
+    Get.dialog(
+        Center(child: CircularProgressIndicator(color: color.primaryColor)));
+
     final epidemiologicalVigilanceModel = EpidemiologicalVigilanceModel(
         pacientes: toInt(patientsController.value.text),
         cvc: toInt(cvcController.value.text),
@@ -54,23 +54,20 @@ class EpidemiologicalVigilanceRegisterController extends GetxController {
     await firestore
         .collection("FICHA_VIGILANCIA")
         .add(epidemiologicalVigilanceModel.toMap())
-        .then((resp) {
-          Get.dialog(CircularProgressIndicator());
-        })
+        .then((resp) {})
         .catchError((error) => Get.snackbar(
             'Erro', 'Não foi possível salvar o registro, tente novamente',
             backgroundColor: color.error, colorText: Colors.white))
         .whenComplete(() {
-          Get.back();
-          Get.back();
-          Get.snackbar(
-            'Sucesso',
-            'Salvo com sucesso',
-            backgroundColor: color.primaryColor,
-            colorText: Colors.white,
-          );
-        });
+      Get.back();
+      Get.back();
+      Get.snackbar(
+        'Sucesso',
+        'Registro salvo com sucesso',
+        backgroundColor: color.primaryColor,
+        colorText: Colors.white,
+      );
+    });
+
   }
-
-
 }

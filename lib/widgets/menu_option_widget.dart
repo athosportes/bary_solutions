@@ -15,6 +15,7 @@ class MenuOptionWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
+      borderRadius: BorderRadius.circular(24),
       onTap: onTap,
       child: Ink(
         child: Stack(
@@ -39,7 +40,7 @@ class MenuOptionWidget extends StatelessWidget {
         width: double.infinity,
         height: 45,
         decoration: BoxDecoration(
-          border: Border.all(color: Colors.black),
+          border: Border.all(color: Colors.black.withOpacity(0.4)),
           borderRadius: BorderRadius.circular(24),
         ),
       ),
