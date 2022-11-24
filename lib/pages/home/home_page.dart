@@ -9,7 +9,6 @@ import '../../widgets/menu_option_widget.dart';
 
 class HomePage extends StatefulWidget {
   final _authService = Get.find<AuthService>();
-
   // const HomePage({super.key});
 
   @override
@@ -17,6 +16,11 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  @override
+  initState() {
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -67,7 +71,7 @@ class _HomePageState extends State<HomePage> {
         Padding(
           padding: const EdgeInsets.all(16),
           child: MenuOptionWidget(
-            onTap: () {},
+            onTap: () => widget._authService.checkUserHasEstablishment(),
             label: 'Cadastros',
             icon: Icons.add_home_work_sharp,
           ),
@@ -99,9 +103,25 @@ class _HomePageState extends State<HomePage> {
           borderRadius: BorderRadius.circular(60),
           onTap: () => Get.toNamed(Routes.PROFILE_OPTIONS),
           child: Ink(
-            child: Icon(
-              CupertinoIcons.person_alt_circle,
-              size: 70,
+            child: Obx(
+              () => Container(
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  // border: Border.all(),
+                ),
+                width: 90,
+                height: 90,
+                child: Center(
+                  child: widget._authService.haveProfilePhoto.value
+                      ? Image.network(widget._authService.profilePhotoUrl.value)
+                      : Center(
+                          child: Icon(
+                            CupertinoIcons.person_alt_circle,
+                            size: 90,
+                          ),
+                        ),
+                ),
+              ),
             ),
           ),
         ),
@@ -115,10 +135,10 @@ class _HomePageState extends State<HomePage> {
               'Bem vindo,',
               style: TextStyle(fontSize: 16),
             ),
-            Text(
-              'Athos Portes',
+            Obx(() => Text(
+              widget._authService.userInformations.value!.nome,
               style: TextStyle(),
-            )
+            ))
           ],
         ),
       ],

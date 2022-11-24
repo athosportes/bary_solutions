@@ -1,24 +1,33 @@
-import 'package:bary_solutions/widgets/full_screen_loading_widget.dart';
 import 'package:flutter/material.dart';
 
+import 'package:bary_solutions/widgets/full_screen_loading_widget.dart';
+import 'package:firebase_storage/firebase_storage.dart';
+import 'package:bary_solutions/models/user_model.dart';
 import 'package:bary_solutions/routes/app_pages.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+
 import 'package:get/get.dart';
 
 import '../constants/constants.dart' as colors;
 
 class AuthService extends GetxController {
+  final FirebaseStorage storage = FirebaseStorage.instance;
+  final FirebaseFirestore firestore = FirebaseFirestore.instance;
+
   FirebaseAuth _auth = FirebaseAuth.instance;
   late Rx<User?> _firebaseUser;
+  Rx<UserModel?> userInformations = Rx(UserModel(id: '', email: '', estabelecimento: '', nome: '', ativo: false));
   var userIsAuthenticated = false.obs;
+  RxString profilePhotoUrl = ''.obs;
+  var haveProfilePhoto = false.obs;
 
   @override
-  void onInit() {
+  void onInit() async {
     super.onInit();
 
     _firebaseUser = Rx<User?>(_auth.currentUser);
     _firebaseUser.bindStream(_auth.authStateChanges());
-
     ever(_firebaseUser, (User? user) async {
       if (user != null) {
         userIsAuthenticated.value = true;
@@ -40,19 +49,26 @@ class AuthService extends GetxController {
         snackPosition: SnackPosition.TOP);
   }
 
+  Future<void> checkUserHasEstablishment() async {
+    await firestore
+        .collection('USUARIO')
+        .doc(_auth.currentUser!.uid)
+        .get()
+        .then((docs) {
+      final user = UserModel.fromSnapshot(docs);
+      userInformations.value = user;
+    });
+  }
+
   login(String email, String password) async {
     try {
       Get.dialog(
         Center(child: CircularProgressIndicator(color: colors.primaryColor)),
         barrierDismissible: false,
       );
-      //await
-      final loginRetorno = await _auth.signInWithEmailAndPassword(email: email, password: password);
-      final currentUSer = await _auth.currentUser;
-
-      print('loginRetorno $loginRetorno');
-      print('currentUSer $currentUSer');
-
+      await _auth.signInWithEmailAndPassword(email: email, password: password);
+      await _auth.currentUser;
+      await getProfilePhoto();
     } on FirebaseAuthException catch (e) {
       Get.back();
       String error = 'Erro';
@@ -78,5 +94,22 @@ class AuthService extends GetxController {
       Get.back();
       showSnack("Erro sair", e.toString());
     }
+  }
+
+  Future<String> getProfilePhoto() async {
+    try {
+      final storageRef =
+          storage.ref().child("photos/profile-photos/${user.uid}");
+      final listResult = await storageRef.listAll();
+      for (var item in listResult.items) {
+        haveProfilePhoto.value = true;
+        var url = await item.getDownloadURL();
+        profilePhotoUrl.value = url;
+        return url;
+      }
+    } on FirebaseStorage catch (e) {
+      e.app.name;
+    }
+    return '';
   }
 }

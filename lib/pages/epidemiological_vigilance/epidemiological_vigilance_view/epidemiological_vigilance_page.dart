@@ -29,7 +29,9 @@ class EpidemiologicalVigilancePage extends StatelessWidget {
               children: [
                 _dateAndUnitSelector(context),
                 Card(
+                  elevation: 3,
                   child: ListTile(
+                    onTap: () => controller.loadEpidemiologicalVigilanceList(),
                     // leading: FlutterLogo(size: 56.0),
                     title: Text('Two-line ListTile'),
                     subtitle: Text('Here is a second line'),

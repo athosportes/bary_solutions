@@ -7,6 +7,7 @@ import 'package:bary_solutions/pages/login/login_controller.dart';
 import 'package:bary_solutions/pages/login/login_page.dart';
 import 'package:bary_solutions/pages/profile_options/profile_options_page.dart';
 import 'package:bary_solutions/services/auth_service.dart';
+import 'package:bary_solutions/services/storage_service.dart';
 import 'package:get/get.dart';
 part './app_routes.dart';
 
@@ -40,10 +41,16 @@ class AppPages {
             () => EpidemiologicalVigilancePageController(),
             fenix: true);
       }),
-    ), 
+    ),
     GetPage(
       name: Routes.PROFILE_OPTIONS,
       page: () => ProfileOptionsPage(),
+      binding: BindingsBuilder(
+        (() {
+          Get.lazyPut<AuthService>(() => AuthService(), fenix: true);
+          Get.lazyPut<StorageService>(() => StorageService(), fenix: true);
+        }),
+      ),
     ),
   ];
 }

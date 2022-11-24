@@ -49,16 +49,18 @@ dependencies:
   firebase_core: ^2.2.0
   firebase_auth: ^4.1.2
   cloud_firestore: ^4.0.2
-  get:
   firebase_storage: ^11.0.6
+  
+  get:
   camera_camera: ^2.0.2
+  path_provider: ^2.0.11
   image_picker: ^0.8.6
   
 # end dependencies
 
 flutter_native_splash:
   color: '#FFFFFF'
-  image: './assets/splash.png'
+  image: './assets/splash.png' 
   android: true
   ios: true
 
