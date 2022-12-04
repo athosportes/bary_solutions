@@ -8,19 +8,24 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 import 'package:get/get.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../constants/constants.dart' as colors;
 
 class AuthService extends GetxController {
   final FirebaseStorage storage = FirebaseStorage.instance;
   final FirebaseFirestore firestore = FirebaseFirestore.instance;
-
-  FirebaseAuth _auth = FirebaseAuth.instance;
+  final FirebaseAuth _auth = FirebaseAuth.instance;
   late Rx<User?> _firebaseUser;
-  Rx<UserModel?> userInformations = Rx(UserModel(id: '', email: '', estabelecimento: '', nome: '', ativo: false));
+
+  var establishmentId = ''.obs;
+
+  Rx<UserModel?> userInformations = Rx(UserModel(
+      id: '', email: '', estabelecimento: '', nome: '', ativo: false));
+
   var userIsAuthenticated = false.obs;
+
   RxString profilePhotoUrl = ''.obs;
-  var haveProfilePhoto = false.obs;
 
   @override
   void onInit() async {
@@ -49,6 +54,23 @@ class AuthService extends GetxController {
         snackPosition: SnackPosition.TOP);
   }
 
+  Future<void> getEstablishmentId() async {
+    SharedPreferences _prefs = await SharedPreferences.getInstance();
+
+    var response =
+        await firestore.collection('USUARIO').doc(_auth.currentUser!.uid).get();
+
+    var establishment = response.data()!['estabelecimento'];
+    _prefs.setString('establishmentId', establishment);
+
+  }
+
+  Future<void> removeEstablishemntSharedPreferences() async {
+    SharedPreferences _prefs = await SharedPreferences.getInstance();
+
+    _prefs.remove('establishemntId');
+  }
+
   Future<void> checkUserHasEstablishment() async {
     await firestore
         .collection('USUARIO')
@@ -69,6 +91,8 @@ class AuthService extends GetxController {
       await _auth.signInWithEmailAndPassword(email: email, password: password);
       await _auth.currentUser;
       await getProfilePhoto();
+      await checkUserHasEstablishment();
+      await getEstablishmentId();
     } on FirebaseAuthException catch (e) {
       Get.back();
       String error = 'Erro';
@@ -90,26 +114,14 @@ class AuthService extends GetxController {
     try {
       FullScreenLoadingWidget();
       await _auth.signOut();
+      removeEstablishemntSharedPreferences();
     } catch (e) {
       Get.back();
       showSnack("Erro sair", e.toString());
     }
   }
 
-  Future<String> getProfilePhoto() async {
-    try {
-      final storageRef =
-          storage.ref().child("photos/profile-photos/${user.uid}");
-      final listResult = await storageRef.listAll();
-      for (var item in listResult.items) {
-        haveProfilePhoto.value = true;
-        var url = await item.getDownloadURL();
-        profilePhotoUrl.value = url;
-        return url;
-      }
-    } on FirebaseStorage catch (e) {
-      e.app.name;
-    }
-    return '';
+  Future<Center> getProfilePhoto() async {
+    return Center();
   }
 }

@@ -35,12 +35,12 @@ class ProfileOptionsPage extends StatelessWidget {
                       height: 250,
                       child: Padding(
                         padding: const EdgeInsets.only(top: 48),
-                        child: _authService.haveProfilePhoto.value
-                            ? Image.network(_authService.profilePhotoUrl.value)
-                            : Icon(
-                                CupertinoIcons.person_alt_circle,
-                                size: 110,
-                              ),
+                        // child: _authService.haveProfilePhoto.value
+                        //     ? Image.network(_authService.profilePhotoUrl.value)
+                        //     : Icon(
+                        //         CupertinoIcons.person_alt_circle,
+                        //         size: 110,
+                        //       ),
                       ),
                     ),
                   ),

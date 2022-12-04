@@ -14,15 +14,19 @@ part './app_routes.dart';
 class AppPages {
   static final routes = [
     GetPage(
-        name: Routes.INITIAL,
-        page: () => LoginPage(),
-        binding: BindingsBuilder(() {
-          Get.lazyPut<LoginController>(() => LoginController(), fenix: true);
-          Get.lazyPut<AuthService>(() => AuthService(), fenix: true);
-        })),
+      name: Routes.INITIAL,
+      page: () => LoginPage(),
+      binding: BindingsBuilder(() {
+        Get.lazyPut<LoginController>(() => LoginController(), fenix: true);
+        Get.lazyPut<AuthService>(() => AuthService(), fenix: true);
+      }),
+    ),
     GetPage(
       name: Routes.HOME,
       page: () => HomePage(),
+      binding: BindingsBuilder(() {
+        Get.lazyPut<AuthService>(() => AuthService(), fenix: true);
+      }),
     ),
     GetPage(
       name: Routes.EPIDEMIOLOGICAL_VIGILANCE_REGISTER,
@@ -30,6 +34,9 @@ class AppPages {
       binding: BindingsBuilder(() {
         Get.lazyPut<EpidemiologicalVigilanceRegisterController>(
             () => EpidemiologicalVigilanceRegisterController(),
+            fenix: true);
+        Get.lazyPut<EpidemiologicalVigilancePageController>(
+            () => EpidemiologicalVigilancePageController(),
             fenix: true);
       }),
     ),

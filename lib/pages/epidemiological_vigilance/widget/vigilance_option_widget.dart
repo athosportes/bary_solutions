@@ -20,7 +20,6 @@ class VigilanceOptionWidget extends StatefulWidget {
 }
 
 class _VigilanceOptionWidgetState extends State<VigilanceOptionWidget> {
-
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -39,8 +38,7 @@ class _VigilanceOptionWidgetState extends State<VigilanceOptionWidget> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 IconButton(
-                  onPressed: () {},
-                  // onPressed: () => _minusOnPressed(),
+                  onPressed: () => _minusOnPressed(),
                   icon: Icon(
                     CupertinoIcons.minus_circle,
                     size: MediaQuery.of(context).size.aspectRatio * 65,
@@ -87,17 +85,15 @@ class _VigilanceOptionWidgetState extends State<VigilanceOptionWidget> {
   _plusOnPressed() {
     FocusScope.of(context).unfocus();
     var sum = toInt(widget.controller.text) + 1;
-    var newValue = widget.controller.text = sum.toString();
-    print(newValue);
+    widget.controller.text = sum.toString();
   }
 
-  // _minusOnPressed() {
-  //   FocusScope.of(context).unfocus();
-  //   var newValue = toString(toInt(widget.listenable.value) - 1);
-  //   if (toInt(newValue) < 0) {
-  //     return;
-  //   }
-  //   widget.listenable.value = newValue;
-  //   widget.controller.text = newValue;
-  // }
+  _minusOnPressed() {
+    FocusScope.of(context).unfocus();
+    var sum = toInt(widget.controller.text) - 1;
+    print(sum);
+    sum <= 0
+        ? widget.controller.text = '0'
+        : widget.controller.text = sum.toString();
+  }
 }

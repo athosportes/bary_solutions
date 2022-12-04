@@ -1,18 +1,21 @@
-import 'package:bary_solutions/pages/epidemiological_vigilance/epidemiological_vigilance_register/epidemiological_vigilance_register_controller.dart';
 import 'package:flutter/material.dart';
 
-import 'package:bary_solutions/widgets/custom_elevated_button_widget.dart';
-import 'package:bary_solutions/pages/epidemiological_vigilance/widget/filter_selector_widget.dart';
+import 'package:bary_solutions/pages/epidemiological_vigilance/epidemiological_vigilance_register/epidemiological_vigilance_register_controller.dart';
+import 'package:bary_solutions/pages/epidemiological_vigilance/epidemiological_vigilance_view/epidemiological_vigilance_page_controller.dart';
 import 'package:bary_solutions/pages/epidemiological_vigilance/widget/vigilance_option_widget.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:bary_solutions/pages/epidemiological_vigilance/widget/filter_selector_widget.dart';
+import 'package:bary_solutions/widgets/custom_elevated_button_widget.dart';
 import 'package:intl/date_symbol_data_local.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:intl/intl.dart';
 import 'package:get/get.dart';
 
-import 'package:intl/intl.dart';
+import '../../../constants/constants.dart' as color;
 
 class EpidemiologialVigilanceRegisterPage
     extends GetView<EpidemiologicalVigilanceRegisterController> {
   final controller = Get.find<EpidemiologicalVigilanceRegisterController>();
+  final _registerPageController = Get.find<EpidemiologicalVigilancePageController>();
 
   final _dateTime = DateTime.now();
 
@@ -104,15 +107,40 @@ class EpidemiologialVigilanceRegisterPage
             // value: Text(DateFormat("d 'de' MMMM").format(e.date.value)),
             value: DateFormat("d 'de' MMMM").format(controller.date.value)),
         FilterSelectorWidget(
-          onTap: () {
+           onTap: () {
             showModalBottomSheet(
                 context: context,
-                // isScrollControlled: true,
                 shape: RoundedRectangleBorder(
                     borderRadius:
                         BorderRadius.vertical(top: Radius.circular(20))),
-                builder: (context) => Center(
-                      child: Text('Texto'),
+                builder: (context) => Padding(
+                      padding: const EdgeInsets.all(16),
+                      child: Obx(
+                        () => !_registerPageController.loadingUnitList.value
+                            ? ListView.separated(
+                                separatorBuilder: (context, index) {
+                                  return Divider();
+                                },
+                                itemCount: _registerPageController.unitList.length,
+                                itemBuilder: (context, index) {
+                                  return ListTile(
+                                    title: Text(
+                                      _registerPageController.unitList
+                                          .asMap()[index]!
+                                          .descricao
+                                          .toString(),
+                                    ),
+                                    subtitle: Text(_registerPageController.unitList
+                                        .asMap()[index]!
+                                        .tipoSetor),
+                                  );
+                                },
+                              )
+                            : Center(
+                                child: CircularProgressIndicator(
+                                color: color.primaryColor,
+                              )),
+                      ),
                     ));
           },
           icon: CupertinoIcons.building_2_fill,

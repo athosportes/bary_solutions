@@ -44,7 +44,7 @@ class StorageService extends GetxController {
 
       task.snapshotEvents.listen((snap) async {
         if (snap.state == TaskState.running) {
-          authService.getProfilePhoto();
+          // authService.getProfilePhoto();
           uploading.value = true;
           total.value = (snap.bytesTransferred / snap.totalBytes) * 100;
         } else if (snap.state == TaskState.success) {

@@ -9,7 +9,7 @@ import '../../widgets/menu_option_widget.dart';
 
 class HomePage extends StatefulWidget {
   final _authService = Get.find<AuthService>();
-  // const HomePage({super.key});
+  HomePage({super.key});
 
   @override
   State<HomePage> createState() => _HomePageState();
@@ -19,6 +19,7 @@ class _HomePageState extends State<HomePage> {
   @override
   initState() {
     super.initState();
+    widget._authService.checkUserHasEstablishment();
   }
 
   @override
@@ -103,24 +104,16 @@ class _HomePageState extends State<HomePage> {
           borderRadius: BorderRadius.circular(60),
           onTap: () => Get.toNamed(Routes.PROFILE_OPTIONS),
           child: Ink(
-            child: Obx(
-              () => Container(
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  // border: Border.all(),
-                ),
-                width: 90,
-                height: 90,
-                child: Center(
-                  child: widget._authService.haveProfilePhoto.value
-                      ? Image.network(widget._authService.profilePhotoUrl.value)
-                      : Center(
-                          child: Icon(
-                            CupertinoIcons.person_alt_circle,
-                            size: 90,
-                          ),
-                        ),
-                ),
+            child: Container(
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                // border: Border.all(),
+              ),
+              width: 90,
+              height: 90,
+              child: Container(
+                // child: _profilePictureLoad(),
+                child: Center(),
               ),
             ),
           ),
@@ -136,9 +129,9 @@ class _HomePageState extends State<HomePage> {
               style: TextStyle(fontSize: 16),
             ),
             Obx(() => Text(
-              widget._authService.userInformations.value!.nome,
-              style: TextStyle(),
-            ))
+                  widget._authService.userInformations.value!.nome,
+                  style: TextStyle(),
+                ))
           ],
         ),
       ],

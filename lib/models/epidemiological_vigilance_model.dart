@@ -1,41 +1,69 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first, unnecessary_null_comparison
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:convert';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/material.dart';
 
 class EpidemiologicalVigilanceModel {
-  num admissoes;
-  num cvc;
-  DateTime data;
-  DateTime dataRegistro;
-  String estabelecimentoId;
-  num npp;
-  num pacientes;
-  num svd;
-  num vm;
+  num? admissoes;
+  num? cvc;
+  DateTime? data;
+  DateTime? dataRegistro;
+  String? estabelecimentoId;
+  num? npp;
+  num? pacientes;
+  num? svd;
+  num? vm;
 
-  EpidemiologicalVigilanceModel({
-    required this.admissoes,
-    required this.cvc,
-    required this.data,
-    required this.dataRegistro,
-    required this.estabelecimentoId,
-    required this.npp,
-    required this.pacientes,
-    required this.svd,
-    required this.vm,
-  });
+  EpidemiologicalVigilanceModel(
+      {this.admissoes,
+      this.cvc,
+      this.data,
+      this.dataRegistro,
+      this.estabelecimentoId,
+      this.npp,
+      this.pacientes,
+      this.svd,
+      this.vm,
+      });
 
-  
+  EpidemiologicalVigilanceModel.fromJson(Map<String, dynamic> json) {
+    Timestamp dataTimestamp = json['data'];
+    var dataConvert = dataTimestamp.millisecondsSinceEpoch;
 
+    Timestamp dataRegistroTimestamp = json['dataRegistro'];
+    var dataRegistroConvert = dataRegistroTimestamp.millisecondsSinceEpoch;
+
+    admissoes = json['admissoes'];
+    cvc = json['cvc'];
+    data = DateTime.fromMillisecondsSinceEpoch(dataConvert);
+    dataRegistro = DateTime.fromMillisecondsSinceEpoch(dataRegistroConvert);
+    estabelecimentoId = json['estabelecimentoId'];
+    npp = json['npp'];
+    pacientes = json['pacientes'];
+    svd = json['svd'];
+    vm = json['vm'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['admissoes'] = this.admissoes;
+    data['cvc'] = this.cvc;
+    data['data'] = this.data;
+    data['dataRegistro'] = this.dataRegistro;
+    data['estabelecimentoId'] = this.estabelecimentoId;
+    data['npp'] = this.npp;
+    data['pacientes'] = this.pacientes;
+    data['svd'] = this.svd;
+    data['vm'] = this.vm;
+    return data;
+  }
 
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
       'admissoes': admissoes,
       'cvc': cvc,
-      'data': data.toUtc(),
-      'dataRegistro': dataRegistro.toUtc(),
+      'data': data,
+      'dataRegistro': dataRegistro,
       'estabelecimentoId': estabelecimentoId,
       'npp': npp,
       'pacientes': pacientes,
@@ -44,21 +72,4 @@ class EpidemiologicalVigilanceModel {
     };
   }
 
-  factory EpidemiologicalVigilanceModel.fromMap(Map<String, dynamic> map) {
-    return EpidemiologicalVigilanceModel(
-      admissoes: map['admissoes'] as num,
-      cvc: map['cvc'] as num,
-      data: DateTime.fromMillisecondsSinceEpoch(map['data'] as int),
-      dataRegistro: DateTime.fromMillisecondsSinceEpoch(map['dataRegistro'] as int),
-      estabelecimentoId: map['estabelecimentoId'] as String,
-      npp: map['npp'] as num,
-      pacientes: map['pacientes'] as num,
-      svd: map['svd'] as num,
-      vm: map['vm'] as num,
-    );
-  }
-
-  String toJson() => json.encode(toMap());
-
-  factory EpidemiologicalVigilanceModel.fromJson(String source) => EpidemiologicalVigilanceModel.fromMap(json.decode(source) as Map<String, dynamic>);
 }

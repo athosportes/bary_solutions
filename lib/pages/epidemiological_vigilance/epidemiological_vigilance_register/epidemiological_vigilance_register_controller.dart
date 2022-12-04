@@ -1,16 +1,19 @@
 // ignore_for_file: invalid_return_type_for_catch_error
-
 import 'package:flutter/material.dart';
 
 import 'package:bary_solutions/models/epidemiological_vigilance_model.dart';
+import 'package:bary_solutions/services/auth_service.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:string_validator/string_validator.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:get/get.dart';
-import 'package:string_validator/string_validator.dart';
 
 import '../../../constants/constants.dart' as color;
 
 class EpidemiologicalVigilanceRegisterController extends GetxController {
   FirebaseFirestore firestore = FirebaseFirestore.instance;
+  final _authService = Get.find<AuthService>();
+
 
   final patientsController = TextEditingController().obs;
   final admissionsController = TextEditingController().obs;
@@ -37,15 +40,17 @@ class EpidemiologicalVigilanceRegisterController extends GetxController {
   }
 
   Future<void> handleAddEpidemiologicalVigilance() async {
+    SharedPreferences _prefs = await SharedPreferences.getInstance();
+  print(_prefs.getString('establishmentId'));
     Get.dialog(
         Center(child: CircularProgressIndicator(color: color.primaryColor)));
-
+    
     final epidemiologicalVigilanceModel = EpidemiologicalVigilanceModel(
         pacientes: toInt(patientsController.value.text),
         cvc: toInt(cvcController.value.text),
         data: date.value,
         dataRegistro: DateTime.now(),
-        estabelecimentoId: '1324adsfadsfasg',
+        estabelecimentoId: _prefs.getString('establishmentId'),
         npp: toInt(nppController.value.text),
         svd: toInt(svdController.value.text),
         vm: toInt(vmController.value.text),
